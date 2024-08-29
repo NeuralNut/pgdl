@@ -1,5 +1,10 @@
 import torch
 
+# if torch.cuda.is_available():
+#     torch.set_default_device('cuda:1')
+#     device = torch.device('cuda:1')
+
+device = torch.device('cpu')
 def oscillator(d, w0, t):
     """Defines the analytical solution to the 1D underdamped harmonic oscillator problem. 
     Equations taken from: https://beltoforion.de/en/harmonic_oscillator/"""
@@ -19,8 +24,8 @@ def physics_loss(model, mu, k, d, w0):
     """Defines the physics-informed loss function for the 1D underdamped harmonic oscillator problem."""
 
     # t0 is the initial time, tL is the final time, tn are the n time points in between
-    t0 = torch.FloatTensor(1,1).fill_(0.0).requires_grad_(True)
-    tn = torch.FloatTensor(29,1).uniform_(0, 1).requires_grad_(True)
+    t0 = torch.FloatTensor(1,1).fill_(0.0).requires_grad_(True).to(device)
+    tn = torch.FloatTensor(29,1).uniform_(0, 1).requires_grad_(True).to(device)
     t = torch.concat([t0, tn], dim=0)
     mask = t.squeeze()<=0.5
 

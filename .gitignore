@@ -1,0 +1,6 @@
+tdsf/data/
+tdsf/data/tdsf_002_train.pickle
+tdsf/data/tdsf_002_val.pickle
+tdsf/data/processed/tdsf_002.1.pickle
+tdsf/data/processed/tdsf_002_constants.csv
+*.pyc

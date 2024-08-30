@@ -1,1 +1,1 @@
-[{"train_seq_length": 243, "final_train_loss": 2.3489047862312873e-07, "final_val_loss": 0.34392839670181274, "final_test_loss": 0.23613318800926208}]
+[{"train_seq_length": 243, "final_train_loss": 2.1158766116968764e-07, "final_val_loss": 0.09017100930213928, "final_test_loss": 0.02332574501633644}]

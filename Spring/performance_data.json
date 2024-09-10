@@ -1,1 +1,23 @@
-[{"train_seq_length": 243, "final_train_loss": 2.1158766116968764e-07, "final_val_loss": 0.09017100930213928, "final_test_loss": 0.02332574501633644}]
+[
+    {
+        "train_seq_length": 10,
+        "extrapolation_length": 110,
+        "final_train_loss": 1.296019308938412e-05,
+        "final_test_loss": 1.2837683243560605e-05,
+        "final_extrapolation_loss": 0.03700187802314758
+    },
+    {
+        "train_seq_length": 15,
+        "extrapolation_length": 105,
+        "final_train_loss": 5.754356152465334e-06,
+        "final_test_loss": 1.6658025288052158e-06,
+        "final_extrapolation_loss": 1.0582974027784076e-05
+    },
+    {
+        "train_seq_length": 30,
+        "extrapolation_length": 90,
+        "final_train_loss": 5.164058165973984e-06,
+        "final_test_loss": 3.753009195861523e-06,
+        "final_extrapolation_loss": 6.042886525392532e-06
+    }
+]

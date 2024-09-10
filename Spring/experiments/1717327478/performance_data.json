@@ -1,1 +1,23 @@
-[{"train_seq_length": 10, "extrapolation_length": 110, "final_train_loss": 1.0441080121381674e-05, "final_test_loss": 9.367679012939334e-06, "final_extrapolation_loss": 0.04713325574994087}, {"train_seq_length": 15, "extrapolation_length": 105, "final_train_loss": 5.704898740077624e-06, "final_test_loss": 2.739369392656954e-06, "final_extrapolation_loss": 7.154897502914537e-06}, {"train_seq_length": 30, "extrapolation_length": 90, "final_train_loss": 2.7030828277929686e-06, "final_test_loss": 1.7074847846743069e-06, "final_extrapolation_loss": 2.5444830953347264e-06}]
+[
+    {
+        "train_seq_length": 10,
+        "extrapolation_length": 110,
+        "final_train_loss": 1.0441080121381674e-05,
+        "final_test_loss": 9.367679012939334e-06,
+        "final_extrapolation_loss": 0.04713325574994087
+    },
+    {
+        "train_seq_length": 15,
+        "extrapolation_length": 105,
+        "final_train_loss": 5.704898740077624e-06,
+        "final_test_loss": 2.739369392656954e-06,
+        "final_extrapolation_loss": 7.154897502914537e-06
+    },
+    {
+        "train_seq_length": 30,
+        "extrapolation_length": 90,
+        "final_train_loss": 2.7030828277929686e-06,
+        "final_test_loss": 1.7074847846743069e-06,
+        "final_extrapolation_loss": 2.5444830953347264e-06
+    }
+]

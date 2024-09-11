@@ -20,6 +20,26 @@ class Cosine(nn.Module):
     def forward(self, x):
         return torch.cos(x)
 
+# Stan activation function class
+class Stan(nn.Module):
+    """
+    Self-scalable Tanh (Stan)
+    References: Gnanasambandam, Raghav and Shen, Bo and Chung, Jihoon and Yue, Xubo and others.
+    Self-scalable Tanh (Stan): Faster Convergence and Better Generalization
+    in Physics-informed Neural Networks. arXiv preprint arXiv:2204.12589, 2022.
+    """
+
+    def __init__(self, out_features=1):
+        super().__init__()
+        self.beta = nn.Parameter(torch.ones(out_features))
+
+    def forward(self, x):
+        if x.shape[-1] != self.beta.shape[-1]:
+            raise ValueError(
+                f"The last dimension of the input must be equal to the dimension of Stan parameters. Got inputs: {x.shape}, params: {self.beta.shape}"
+            )
+        return torch.tanh(x) * (1.0 + self.beta * x)
+
 
 class KANLinear(torch.nn.Module):
     def __init__(

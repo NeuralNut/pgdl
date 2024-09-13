@@ -20,14 +20,25 @@ def oscillator(d, w0, t):
 
 
 # Define the physics-informed loss
-def physics_loss(model, mu, k, d, w0):
-    """Defines the physics-informed loss function for the 1D underdamped harmonic oscillator problem."""
+def oscillator_loss(model, mu, k, d, w0, n=30, t0=0.0, tL=1.0, train_frac=0.5, return_data=False):
+    """
+    Defines the physics-informed loss function for the 1D underdamped harmonic oscillator problem.
+    The loss function is composed of three terms:
+    - The physics loss, which enforces the differential equation
+    - The data loss, which enforces the model to fit the training data
+    - The initial condition loss, which enforces the model to satisfy the initial conditions
 
-    # t0 is the initial time, tL is the final time, tn are the n time points in between
-    t0 = torch.FloatTensor(1,1).fill_(0.0).requires_grad_(True).to(device)
-    tn = torch.FloatTensor(29,1).uniform_(0, 1).requires_grad_(True).to(device)
+    """
+
+    # t0 is the initial time, tL is the final time, tn are the n-1 time points in between
+    tn = torch.FloatTensor(n-1,1).uniform_(t0, tL).requires_grad_(True).to(device)
+    t0 = torch.FloatTensor(1,1).fill_(t0).requires_grad_(True).to(device)
     t = torch.concat([t0, tn], dim=0)
-    mask = t.squeeze()<=0.5
+    
+    
+    # Mask for the training data
+    t_train = tL*train_frac
+    mask = t.squeeze()<=t_train
 
     # True displacement
     x_true = oscillator(d, w0, t).reshape(-1, 1)
@@ -36,7 +47,7 @@ def physics_loss(model, mu, k, d, w0):
     x = model(t)
     
     # Data loss
-    dloss = torch.mean((x-x_true)[mask]**2)
+    dloss = torch.mean((x-x_true)[mask]**2) # only consider the training data for data loss calculation
 
     # Automatically compute derivatives
     x_t = torch.autograd.grad(x, t, torch.ones_like(x), create_graph=True)[0]  # dx/dt
@@ -46,11 +57,21 @@ def physics_loss(model, mu, k, d, w0):
     phy = x_tt + mu*x_t + k*x # = 0
     ploss = torch.mean(phy**2)
 
-    ic1 = torch.mean((x[0]-1.)**2)
-    ic2 = torch.mean((x_t[0]-0.)**2)
-    ic = ic1 + ic2
+    ic1 = torch.mean((x[0]-1.)**2) # x(0) = 1  ie initial displacement is 1
+    ic2 = torch.mean((x_t[0]-0.)**2) # dx/dt(0) = 0  ie initial velocity is zero
+    icloss = ic1 + ic2
 
-    # Return the mean squared error against the expected zero
-    return (ploss, # physics loss
-            dloss, # data loss
-            ic) # initial condition loss
+    if return_data:
+        return (ploss, # physics loss
+                dloss, # data loss
+                icloss, # initial condition loss
+                x_true, # true displacement
+                x, # predicted displacement
+                t, # time points
+                mask) # mask for training data
+    
+    else:
+        # Return the mean squared error against the expected zero
+        return (ploss, # physics loss
+                dloss, # data loss
+                icloss) # initial condition loss

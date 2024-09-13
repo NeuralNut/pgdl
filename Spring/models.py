@@ -10,17 +10,18 @@ from layers import KANLinear
 
 # NN implementation
 class NN(nn.Module):
-    def __init__(self, input_dim, hidden_dims, output_dim):
+    def __init__(self, input_dim, hidden_dims, output_dim, act=nn.Tanh):
         super(NN, self).__init__()
         self.input_dim = input_dim
         self.hidden_dims = hidden_dims
         self.output_dim = output_dim
+        self.act = act()
 
         layers = []
         current_dim = input_dim
         for h_dim in hidden_dims:
             layers.append(nn.Linear(current_dim, h_dim))
-            layers.append(nn.ReLU())
+            layers.append(self.act)
             current_dim = h_dim
         layers.append(nn.Linear(current_dim, output_dim))
 
@@ -76,30 +77,6 @@ class KAN(torch.nn.Module):
             layer.regularization_loss(regularize_activation, regularize_entropy)
             for layer in self.layers
         )
-
-
-# Define the neural network model
-class PIKAN(nn.Module):
-    def __init__(self):
-        super(PIKAN, self).__init__()
-
-        # not implemented error
-        raise NotImplementedError("NNSSM not implemented yet")
-    
-        self.net = KAN(
-            layers_hidden=[1, 50, 50, 1],  # Define the layer sizes
-            grid_size=100,
-            spline_order=3,
-            scale_noise=0.1,
-            scale_base=1.0,
-            scale_spline=1.0,
-            base_activation=torch.nn.SiLU,
-            grid_eps=0.02,
-            grid_range=[-1, 1]
-        )
-
-    def forward(self, t):
-        return self.net(t)
     
 
 # Kolmogorov-Arnold State-Space Model Implementation

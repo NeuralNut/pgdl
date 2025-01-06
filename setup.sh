@@ -25,8 +25,7 @@ echo "Activating environment and installing required packages..."
 source $HOME/miniconda3/bin/activate
 conda activate phd2
 
-pip install "jax[cuda12]" flax optax pandas scipy matplotlib seaborn scikit-learn
-
+pip install "jax[cuda12]" flax optax 'transformers[flax]' dm-haiku jaxtyping clu einops optuna pandas scipy matplotlib seaborn scikit-learn
 # Step 6: Final message
 echo "Setup complete. To use the 'phd' environment, run:"
 echo "  conda activate phd"

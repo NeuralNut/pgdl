@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from tqdm import trange
 import itertools
 
-from mambapinn import MambaForPINN
+# from mambapinn import MambaForPINN
 from dataclasses import dataclass
 from typing import Union
 import math
@@ -340,6 +340,8 @@ class MAMBAPINN:
 
 d = 2.0
 w0 = 20.0
+mu = 2*d
+k = w0**2
 
 # Generate collocation points and data points
 t_r = jnp.linspace(0.0, 1.0, 100)   # Collocation points for residual
